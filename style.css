@@ -1,0 +1,302 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.clock-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.5));
+    position: relative;
+}
+
+/* Decorative rings around the clock */
+.clock-container::before,
+.clock-container::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    animation: rotate 20s linear infinite;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.clock-container::before {
+    width: 340px;
+    height: 340px;
+    border-top-color: rgba(255, 255, 255, 0.3);
+    border-right-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.1),
+        0 0 40px rgba(255, 255, 255, 0.05);
+    animation: rotate 20s linear infinite, glowRing 2s ease-in-out infinite alternate;
+}
+
+.clock-container::after {
+    width: 360px;
+    height: 360px;
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+    border-left-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.1),
+        0 0 40px rgba(255, 255, 255, 0.05);
+    animation: rotate 20s linear infinite reverse, glowRing 2s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes glowRing {
+    0% {
+        box-shadow: 
+            0 0 20px rgba(255, 255, 255, 0.1),
+            0 0 40px rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(255, 255, 255, 0.2),
+            0 0 60px rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    100% {
+        box-shadow: 
+            0 0 20px rgba(255, 255, 255, 0.1),
+            0 0 40px rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+.analog-clock {
+    width: 320px;
+    height: 320px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 
+        20px 20px 60px rgba(0, 0, 0, 0.4),
+        -20px -20px 60px rgba(255, 255, 255, 0.05),
+        inset 0 0 20px rgba(0, 0, 0, 0.2);
+    border: 12px solid #2a2a2a;
+    animation: glow 2s ease-in-out infinite alternate;
+    overflow: hidden;
+}
+
+/* Decorative inner circle */
+.analog-clock::before {
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border-radius: 50%;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+    z-index: 0;
+}
+
+/* Decorative pattern */
+.analog-clock::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at center, transparent 60%, rgba(255, 255, 255, 0.05) 60.5%, transparent 61%),
+        repeating-conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            transparent 30deg,
+            rgba(255, 255, 255, 0.03) 30deg,
+            rgba(255, 255, 255, 0.03) 30.5deg
+        ),
+        radial-gradient(
+            circle at center,
+            transparent 0%,
+            rgba(255, 255, 255, 0.05) 50%,
+            transparent 100%
+        );
+    z-index: 1;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 
+            20px 20px 60px rgba(0, 0, 0, 0.4),
+            -20px -20px 60px rgba(255, 255, 255, 0.05),
+            inset 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    to {
+        box-shadow: 
+            20px 20px 60px rgba(0, 0, 0, 0.4),
+            -20px -20px 60px rgba(255, 255, 255, 0.05),
+            inset 0 0 30px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(255, 255, 255, 0.1);
+    }
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 4;
+    transition: transform 0.5s cubic-bezier(0.4, 2.08, 0.55, 0.44);
+}
+
+.hour-hand {
+    width: 8px;
+    height: 80px;
+    margin-left: -4px;
+    background: linear-gradient(to top, #ffffff, #cccccc);
+    border-radius: 8px;
+}
+
+.minute-hand {
+    width: 6px;
+    height: 100px;
+    margin-left: -3px;
+    background: linear-gradient(to top, #ffffff, #cccccc);
+    border-radius: 6px;
+}
+
+.second-hand {
+    width: 2px;
+    height: 120px;
+    margin-left: -1px;
+    background: linear-gradient(to top, #ff4d4d, #ff0000);
+    border-radius: 2px;
+}
+
+.center-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    background: #ff4d4d;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+    z-index: 5;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.center-dot::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+    animation: ripple 2s ease-out infinite;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 77, 77, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+    }
+}
+
+.number {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.number:hover {
+    transform: scale(1.1);
+    color: #ff4d4d;
+    text-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+}
+
+.number1 { transform: rotate(30deg); }
+.number2 { transform: rotate(60deg); }
+.number3 { transform: rotate(90deg); }
+.number4 { transform: rotate(120deg); }
+.number5 { transform: rotate(150deg); }
+.number6 { transform: rotate(180deg); }
+.number7 { transform: rotate(210deg); }
+.number8 { transform: rotate(240deg); }
+.number9 { transform: rotate(270deg); }
+.number10 { transform: rotate(300deg); }
+.number11 { transform: rotate(330deg); }
+.number12 { transform: rotate(0deg); }
+
+.digital-clock {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(42, 42, 42, 0.95);
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffffff;
+    box-shadow: 
+        0 0 20px rgba(0, 0, 0, 0.3),
+        inset 0 0 10px rgba(255, 255, 255, 0.1);
+    z-index: 3;
+    white-space: nowrap;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.digital-clock:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 
+        0 0 30px rgba(0, 0, 0, 0.4),
+        inset 0 0 15px rgba(255, 255, 255, 0.15);
+    background: rgba(42, 42, 42, 0.98);
+}
+
+#ampm {
+    font-size: 1.1rem;
+    margin-left: 0.4rem;
+    color: #ff4d4d;
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(255, 77, 77, 0.3);
+} 
